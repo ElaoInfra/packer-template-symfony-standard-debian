@@ -1,7 +1,7 @@
 {
     "description": "Symfony Standard - Debian",
     "variables": {
-        "name"    : "symfony-standard",
+        "name"    : "symfony-standard-debian",
         "version" : "1.0.4"
     },
     "builders": [
