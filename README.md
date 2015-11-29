@@ -51,5 +51,11 @@
 
 ## Todo
 
+ * Remove git repo "packer-templates"
  * Switch from phantomjs to electron (http://electron.atom.io/)
- * 
+ * Fix php acl permissions
+ * Mailcatcher as a package (systemd + don't use ruby/pthon roles anymore)
+ * Supervisor as a package (systemd + don't use ruby/pthon roles anymore)
+ * Forgive capifony (ansible based deployment)
+ * Switch from logio to heka/rtail)
+ * Php 7
