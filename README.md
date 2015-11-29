@@ -18,9 +18,9 @@
  * Gem 2.4.5 (bearstech)
  * Python 2.7.3
  * Pip 7.1.2
- * Node 0.12.7 (nodesource)
- * Npm 2.11.3 (nodesource)
- * Php 5.6.13 (dotdeb)
+ * Node 0.12.8 (nodesource)
+ * Npm 2.14.9 (nodesource)
+ * Php 5.6.15-1 (dotdeb)
    * php5-common, php5-cli, php5-fpm
    * php5-readline, php5-intl, php5-curl
    * php5-xdebug
@@ -31,10 +31,10 @@
  * Supervisor 3.1.3
  * Log.io
  * Capifony 2.8.6
- * Bower 1.5.2
+ * Bower 1.6.8
  * Gulp 3.9.0
- * Php cs fixer ???
- * Php CS ???
+ * PHP CS Fixer 1.10.2
+ * PHP_CodeSniffer 2.4.0
 
 ## Miscellaneous ##
 
