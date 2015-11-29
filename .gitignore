@@ -1,0 +1,9 @@
+/packer_cache/
+/output-*
+/*.box
+/*.tar
+
+/ansible/roles/*.*/
+
+/tests/vagrant/.vagrant/
+/tests/vagrant/ansible.cfg

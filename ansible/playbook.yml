@@ -1,0 +1,249 @@
+---
+
+- hosts: all
+
+  vars:
+
+    _env:  dev
+
+    # Set by packer
+    # =============
+    #_version: x.x.x
+    #_user:    vagrant|docker
+    #_type:    vagrant|docker
+
+    ########
+    # Motd #
+    ########
+
+    elao_motd: "Elao - Symfony Standard - Debian - {{ _version }}"
+
+    ############
+    # Timezone #
+    ############
+
+    elao_timezone: Etc/UTC
+
+    ###########
+    # Locales #
+    ###########
+
+    elao_locales_default: C.UTF-8
+
+    #######
+    # Env #
+    #######
+
+    elao_env:
+      - SYMFONY_ENV: "{{ _env }}"
+
+    #######
+    # Apt #
+    #######
+
+    elao_apt_update: true
+
+    elao_apt_components: ['main']
+
+    elao_apt_sources_list_template: sources_list/debian.list.j2
+
+    elao_apt_repositories_exclusive: true
+    elao_apt_repositories:
+      - debian_security
+      - debian_updates
+
+    elao_apt_preferences:
+      - ruby@bearstech
+      - git@backports
+      - vim@backports
+      - ~@dotdeb:100
+      - php@dotdeb_php56
+      - nginx@nginx
+      - nodejs@nodesource_0_12
+
+    #######
+    # Ssh #
+    #######
+
+    elao_ssh_config_sshd_template: config/sshd/{{ _env }}.j2
+
+    elao_ssh_config_template: config/{{ _env }}.j2
+    elao_ssh_config: []
+
+    #######
+    # Git #
+    #######
+
+    elao_git_config_template: config/{{ _env }}.j2
+
+    #############
+    # Oh my zsh #
+    #############
+
+    elao_ohmyzsh_users:
+      - user:     "{{ _user }}"
+        template: users/{{ _env }}.j2
+
+    #######
+    # Vim #
+    #######
+
+    elao_vim_config_template: config/{{ _env }}.j2
+
+    #########
+    # Files #
+    #########
+
+    elao_files:
+      - path:  /var/log/symfony
+        state: directory
+        acls:
+          - "user:{{ elao_php_user }}:rwx"
+          - "user:{{ _user }}:rwx"
+          - "default:user:{{ elao_php_user }}:rwx"
+          - "default:user:{{ _user }}:rwx"
+      - path:  /var/cache/symfony
+        state: directory
+        acls:
+          - "user:{{ elao_php_user }}:rwx"
+          - "user:{{ _user }}:rwx"
+          - "default:user:{{ elao_php_user }}:rwx"
+          - "default:user:{{ _user }}:rwx"
+
+    #######
+    # Gem #
+    #######
+
+    elao_gem_packages:
+      - name:    capifony
+        version: ~> 2.8
+
+    #############
+    # PhantomJS #
+    #############
+
+    elao_phantomjs_config_template: config/{{ _env }}.j2
+
+    ###############
+    # Mailcatcher #
+    ###############
+
+    elao_mailcatcher_config_template: config/{{ _env }}.j2
+
+    ##########
+    # Log.io #
+    ##########
+
+    elao_logio_config_harvester:
+      - nodeName: App
+      - logStreams:
+        - php:
+          - "{{ elao_php_log_dir }}/error.log"
+        - nginx:
+          - "{{ elao_nginx_log_dir }}/app.access.log"
+          - "{{ elao_nginx_log_dir }}/app.error.log"
+        - symfony:
+          - /var/log/symfony/dev.log
+          - /var/log/symfony/test.log
+          - /var/log/symfony/prod.log
+
+    #######
+    # Php #
+    #######
+
+    elao_php_version: 5
+
+    elao_php_sapis: ['cli', 'fpm']
+
+    elao_php_fpm_pools_exclusive: true
+    elao_php_fpm_pools:
+      - file:     www.conf
+        template: fpm_pools/www_{{ _env }}.conf.j2
+
+    elao_php_extensions:
+      # Dev
+      - xdebug
+      # Symfony
+      - intl
+      - curl
+
+    elao_php_configs_exclusive: true
+    elao_php_configs:
+      - file: 50-xdebug.ini
+        template: configs/xdebug_{{ _env }}.ini.j2
+      - file: 50-opcache.ini
+        template: configs/opcache_{{ _env }}.ini.j2
+      - file: 60-config.ini
+        template: configs/{{ _env }}.ini.j2
+        config:
+          - date.timezone: UTC
+
+    elao_php_applications:
+      - php-cs-fixer
+      - phpcs
+
+    #########
+    # Nginx #
+    #########
+
+    elao_nginx_config_template: config/http_{{ _env }}.conf.j2
+
+    elao_nginx_configs_exclusive: true
+
+    #######
+    # Npm #
+    #######
+
+    elao_npm_packages:
+      - name:    bower
+        version: 1
+      - name:    gulp
+        version: 3
+
+    ##############
+    # Supervisor #
+    ##############
+
+    elao_supervisor_config_template: config/{{ _env }}.conf.j2
+
+    elao_supervisor_configs_exclusive: true
+    elao_supervisor_configs:
+      - file:     inet-http-server.conf
+        template: configs/inet_http_server_{{ _env }}.conf.j2
+
+  roles:
+    - role: elao.motd
+    - role: elao.timezone
+    - role: elao.locales
+    - role: elao.env
+    - role: elao.apt
+    - role: elao.ssh
+    - role: elao.zsh
+      when: "_packer_builder != 'docker'"
+    - role: elao.git
+    - role: elao.ohmyzsh
+      when: "_packer_builder != 'docker'"
+    - role: elao.curl
+    - role: elao.vim
+      when: "_packer_builder != 'docker'"
+    - role: elao.make
+    - role: elao.acl
+    - role: elao.files
+    - role: elao.nodejs
+    - role: elao.npm
+    - role: elao.python
+      when: "_packer_builder != 'docker'"
+    - role: elao.pip
+      when: "_packer_builder != 'docker'"
+    - role: elao.ruby
+    - role: elao.gem
+      when: "_packer_builder != 'docker'"
+    - role: elao.phantomjs
+    - role: elao.mailcatcher
+    - role: elao.logio
+      when: "_packer_builder != 'docker'"
+    - role: elao.php
+    - role: elao.composer
+    - role: elao.nginx
+    - role: elao.supervisor
+      when: "_packer_builder != 'docker'"

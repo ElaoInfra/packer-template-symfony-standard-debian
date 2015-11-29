@@ -1,0 +1,117 @@
+{
+    "description": "Symfony Standard - Debian",
+    "variables": {
+        "name"    : "symfony-standard",
+        "version" : "1.0.4"
+    },
+    "builders": [
+        {
+            "name"                 : "vagrant",
+            "type"                 : "virtualbox-iso",
+            "guest_os_type"        : "Debian_64",
+            "format"               : "ovf",
+            "headless"             : true,
+            "iso_urls"             : [
+                "http://cdimage.debian.org/cdimage/archive/7.9.0/amd64/iso-cd/debian-7.9.0-amd64-netinst.iso"
+            ],
+            "iso_checksum"         : "774d1fc8c5364e63b22242c33a89c1a3",
+            "iso_checksum_type"    : "md5",
+            "disk_size"            : 65536,
+            "hard_drive_interface" : "sata",
+            "ssh_username"         : "root",
+            "ssh_password"         : "root",
+            "ssh_wait_timeout"     : "30m",
+            "shutdown_command"     : "/sbin/shutdown -h now",
+            "http_directory"       : "templates/debian-7-amd64/http",
+            "boot_command"         : [
+                "<esc><wait>",
+                "install <wait>",
+                "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
+                "debian-installer=en_US <wait>",
+                "auto <wait>",
+                "locale=en_US <wait>",
+                "kbd-chooser/method=us <wait>",
+                "netcfg/get_hostname=debian <wait>",
+                "netcfg/get_domain= <wait>",
+                "fb=false <wait>",
+                "debconf/frontend=noninteractive <wait>",
+                "console-setup/ask_detect=false <wait>",
+                "console-keymaps-at/keymap=us <wait>",
+                "keyboard-configuration/xkb-keymap=us <wait>",
+                "<enter><wait>"
+            ],
+            "vboxmanage": [
+                ["modifyvm", "{{.Name}}", "--memory", "1024"],
+                ["modifyvm", "{{.Name}}", "--cpus", "1"]
+            ],
+            "vm_name": "{{user `name`}}"
+        },
+        {
+            "name"        : "docker",
+            "type"        : "docker",
+            "image"       : "elao/debian-7-amd64",
+            "export_path" : "{{user `name`}}-{{user `version`}}-docker.tar"
+        }
+    ],
+    "provisioners": [
+        {
+            "type"    : "shell",
+            "scripts" : [
+                "templates/debian-7-amd64/scripts/apt.sh",
+                "templates/debian-7-amd64/scripts/bzip2.sh",
+                "templates/debian-7-amd64/scripts/ansible.sh"
+            ]
+        },
+        {
+            "type"    : "shell",
+            "scripts" : [
+                "templates/debian-7-amd64/scripts/openssh-server.sh"
+            ],
+            "only"    : ["docker"]
+        },
+        {
+            "type"    : "shell",
+            "scripts" : [
+                "templates/debian-7-amd64/scripts/nfs.sh",
+                "templates/debian-7-amd64/scripts/grub.sh",
+                "templates/debian-7-amd64/scripts/virtualbox.sh"
+            ],
+            "only"    : ["vagrant"]
+        },
+        {
+            "type"            : "ansible-local",
+            "playbook_file"   : "templates/debian-7-amd64/ansible/playbook.yml",
+            "playbook_dir"    : "templates/debian-7-amd64/ansible",
+            "extra_arguments" : ["-e '_version={{user `version`}} _user={{build_name}} _type={{user `packer_builder`}}'"]
+        },
+        {
+            "type"            : "ansible-local",
+            "playbook_file"   : "ansible/playbook.yml",
+            "playbook_dir"    : "ansible",
+            "extra_arguments" : ["-e '_version={{user `version`}} _user={{build_name}} _type={{user `packer_builder`}}'"]
+        },
+        {
+            "type"    : "shell",
+            "scripts" : [
+                "templates/debian-7-amd64/scripts/clean-apt.sh"
+            ]
+        },
+        {
+            "type"    : "shell",
+            "scripts" : [
+                "templates/debian-7-amd64/scripts/clean-virtualbox.sh"
+            ],
+            "only"    : ["vagrant"]
+        }
+    ],
+    "post-processors": [
+        [
+            {
+                "type"              : "vagrant",
+                "output"            : "{{user `name`}}-{{user `version`}}-virtualbox.box",
+                "compression_level" : 9,
+                "only"              : ["vagrant"]
+            }
+        ]
+    ]
+}
