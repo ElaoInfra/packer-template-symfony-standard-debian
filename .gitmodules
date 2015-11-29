@@ -1,4 +1,4 @@
-[submodule "templates/debian-7-amd64"]
-	path = templates/debian-7-amd64
-	url = git@github.com:ElaoInfra/packer-template-debian-7-amd64.git
+[submodule "templates/debian-8-amd64"]
+	path = templates/debian-8-amd64
+	url = git@github.com:ElaoInfra/packer-template-debian-8-amd64.git
 	branch = 1.0

@@ -4,7 +4,7 @@
 
   vars:
 
-    _env:  dev
+    _env: dev
 
     # Set by packer
     # =============
@@ -51,15 +51,14 @@
     elao_apt_repositories:
       - debian_security
       - debian_updates
+      - debian_backports
 
     elao_apt_preferences:
       - ruby@bearstech
-      - git@debian_backports
-      - vim@debian_backports
       - ~@dotdeb:100
-      - php@dotdeb_php56
+      - php@dotdeb
       - nginx@nginx
-      - nodejs@nodesource_0_12
+      - nodejs@nodesource_5
 
     #######
     # Ssh #
@@ -151,7 +150,7 @@
     # Php #
     #######
 
-    elao_php_version: 5
+    elao_php_version: 7.0
 
     elao_php_sapis: ['cli', 'fpm']
 
@@ -223,7 +222,7 @@
     - role: elao.git
     - role: elao.ohmyzsh
       when: "_type != 'docker'"
-    - role: elao.curl
+#    - role: elao.curl
     - role: elao.vim
       when: "_type != 'docker'"
     - role: elao.make
@@ -231,19 +230,19 @@
     - role: elao.files
     - role: elao.nodejs
     - role: elao.npm
-    - role: elao.python
-      when: "_type != 'docker'"
-    - role: elao.pip
-      when: "_type != 'docker'"
-    - role: elao.ruby
-    - role: elao.gem
-      when: "_type != 'docker'"
-    - role: elao.phantomjs
-    - role: elao.mailcatcher
-    - role: elao.logio
-      when: "_type != 'docker'"
-    - role: elao.php
-    - role: elao.composer
+#    - role: elao.python
+#      when: "_type != 'docker'"
+#    - role: elao.pip
+#      when: "_type != 'docker'"
+#    - role: elao.ruby
+#    - role: elao.gem
+#      when: "_type != 'docker'"
+#    - role: elao.phantomjs
+#    - role: elao.mailcatcher
+#    - role: elao.logio
+#      when: "_type != 'docker'"
+#    - role: elao.php
+#    - role: elao.composer
     - role: elao.nginx
-    - role: elao.supervisor
-      when: "_type != 'docker'"
+#    - role: elao.supervisor
+#      when: "_type != 'docker'"

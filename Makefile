@@ -77,7 +77,7 @@ update-templates:
 
 ## Update roles
 update-roles:
-	printf "${COLOR_INFO}Install ansible galaxy roles into ${COLOR_RESET}templates/debian-7-amd64/ansible/roles:\n"
-	ansible-galaxy install -f -r templates/debian-7-amd64/ansible/roles.yml -p templates/debian-7-amd64/ansible/roles
+	printf "${COLOR_INFO}Install ansible galaxy roles into ${COLOR_RESET}templates/debian-8-amd64/ansible/roles:\n"
+	ansible-galaxy install -f -r templates/debian-8-amd64/ansible/roles.yml -p templates/debian-8-amd64/ansible/roles
 	printf "${COLOR_INFO}Install ansible galaxy roles into ${COLOR_RESET}ansible/roles:\n"
 	ansible-galaxy install -f -r ansible/roles.yml -p ansible/roles
