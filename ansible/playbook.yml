@@ -219,31 +219,31 @@
     - role: elao.apt
     - role: elao.ssh
     - role: elao.zsh
-      when: "_packer_builder != 'docker'"
+      when: "_type != 'docker'"
     - role: elao.git
     - role: elao.ohmyzsh
-      when: "_packer_builder != 'docker'"
+      when: "_type != 'docker'"
     - role: elao.curl
     - role: elao.vim
-      when: "_packer_builder != 'docker'"
+      when: "_type != 'docker'"
     - role: elao.make
     - role: elao.acl
     - role: elao.files
     - role: elao.nodejs
     - role: elao.npm
     - role: elao.python
-      when: "_packer_builder != 'docker'"
+      when: "_type != 'docker'"
     - role: elao.pip
-      when: "_packer_builder != 'docker'"
+      when: "_type != 'docker'"
     - role: elao.ruby
     - role: elao.gem
-      when: "_packer_builder != 'docker'"
+      when: "_type != 'docker'"
     - role: elao.phantomjs
     - role: elao.mailcatcher
     - role: elao.logio
-      when: "_packer_builder != 'docker'"
+      when: "_type != 'docker'"
     - role: elao.php
     - role: elao.composer
     - role: elao.nginx
     - role: elao.supervisor
-      when: "_packer_builder != 'docker'"
+      when: "_type != 'docker'"
