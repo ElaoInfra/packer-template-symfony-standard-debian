@@ -4,7 +4,7 @@
 
   vars:
 
-    _env:  dev
+    _env: dev
 
     # Set by packer
     # =============
