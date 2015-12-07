@@ -59,7 +59,7 @@ ifeq (${type}, docker)
 	docker push elao/${template}:${version_minor}
 else
 	printf "${COLOR_INFO}Upload vagrant box ${COLOR_RESET}\n"
-	scp ${template}-${version}-virtualbox.box infra.elao.com:/mnt/data/vagrant/boxes
+	scp ${template}-${version}-virtualbox.box infra.elao.elao.local:/mnt/data/vagrant/boxes
 endif
 
 ## Clean
