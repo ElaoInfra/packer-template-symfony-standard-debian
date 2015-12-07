@@ -123,6 +123,7 @@
     elao_php_extensions:
       # Dev
       - xdebug
+      - opcache
       # Symfony
       - intl
       - curl
