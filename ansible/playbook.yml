@@ -99,6 +99,13 @@
           - /var/log/symfony/dev.log
           - /var/log/symfony/test.log
           - /var/log/symfony/prod.log
+    - path:  /var/lib/app/sessions
+      state: directory
+      acls:
+        - "user:{{ elao_php_user }}:rwx"
+        - "user:{{ _user }}:rwx"
+        - "default:user:{{ elao_php_user }}:rwx"
+        - "default:user:{{ _user }}:rwx"
 
     #######
     # Php #
