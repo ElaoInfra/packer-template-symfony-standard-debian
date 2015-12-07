@@ -148,8 +148,6 @@
     #######
 
     elao_npm_packages:
-      - name:    bower
-        version: 1
       - name:    gulp
         version: 3
 
