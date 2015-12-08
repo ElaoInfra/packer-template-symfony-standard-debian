@@ -4,31 +4,14 @@
 
   vars:
 
-    _env:  dev
+    _env: dev
 
     # Set by packer
     # =============
-    #_version: x.x.x
-    #_user:    vagrant|docker
-    #_type:    vagrant|docker
-
-    ########
-    # Motd #
-    ########
-
-    elao_motd: "Elao - Symfony Standard - Debian - {{ _version }}"
-
-    ############
-    # Timezone #
-    ############
-
-    elao_timezone: Etc/UTC
-
-    ###########
-    # Locales #
-    ###########
-
-    elao_locales_default: C.UTF-8
+    #_description: Foo bar
+    #_version:     x.x.x
+    #_user:        vagrant|docker
+    #_type:        vagrant|docker
 
     #######
     # Env #
@@ -60,35 +43,6 @@
       - php@dotdeb_php56
       - nginx@nginx
       - nodejs@nodesource_0_12
-
-    #######
-    # Ssh #
-    #######
-
-    elao_ssh_config_sshd_template: config/sshd/{{ _env }}.j2
-
-    elao_ssh_config_template: config/{{ _env }}.j2
-    elao_ssh_config: []
-
-    #######
-    # Git #
-    #######
-
-    elao_git_config_template: config/{{ _env }}.j2
-
-    #############
-    # Oh my zsh #
-    #############
-
-    elao_ohmyzsh_users:
-      - user:     "{{ _user }}"
-        template: users/{{ _env }}.j2
-
-    #######
-    # Vim #
-    #######
-
-    elao_vim_config_template: config/{{ _env }}.j2
 
     #########
     # Files #
@@ -212,22 +166,9 @@
         template: configs/inet_http_server_{{ _env }}.conf.j2
 
   roles:
-    - role: elao.motd
-    - role: elao.timezone
-    - role: elao.locales
     - role: elao.env
     - role: elao.apt
-    - role: elao.ssh
-    - role: elao.zsh
-      when: "_type != 'docker'"
-    - role: elao.git
-    - role: elao.ohmyzsh
-      when: "_type != 'docker'"
     - role: elao.curl
-    - role: elao.vim
-      when: "_type != 'docker'"
-    - role: elao.make
-    - role: elao.acl
     - role: elao.files
     - role: elao.nodejs
     - role: elao.npm

@@ -1,8 +1,8 @@
 {
-    "description": "Symfony Standard - Debian",
     "variables": {
-        "name"    : "symfony-standard-debian",
-        "version" : "1.0.4"
+        "name"        : "symfony-standard-debian",
+        "description" : "Symfony Standard - Debian",
+        "version"     : "1.0.4"
     },
     "builders": [
         {
@@ -82,13 +82,17 @@
             "type"            : "ansible-local",
             "playbook_file"   : "templates/debian-7-amd64/ansible/playbook.yml",
             "playbook_dir"    : "templates/debian-7-amd64/ansible",
-            "extra_arguments" : ["-e '_version={{user `version`}} _user={{build_name}} _type={{user `packer_builder`}}'"]
+            "extra_arguments" : [
+                "--extra-vars '_description=\"{{user `description`}}\" _version=\"{{user `version`}}\" _user=\"{{build_name}}\" _type=\"{{user `packer_builder`}}\"'"
+            ]
         },
         {
             "type"            : "ansible-local",
             "playbook_file"   : "ansible/playbook.yml",
             "playbook_dir"    : "ansible",
-            "extra_arguments" : ["-e '_version={{user `version`}} _user={{build_name}} _type={{user `packer_builder`}}'"]
+            "extra_arguments" : [
+                "--extra-vars '_description=\"{{user `description`}}\" _version=\"{{user `version`}}\" _user=\"{{build_name}}\" _type=\"{{user `packer_builder`}}\"'"
+            ]
         },
         {
             "type"    : "shell",
