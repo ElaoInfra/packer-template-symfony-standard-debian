@@ -42,6 +42,12 @@
       - nginx@nginx
       - nodejs@nodesource_5
 
+    ###########
+    # MailHog #
+    ###########
+
+    elao_mailhog_config_template: config/{{ _env }}.j2
+
     #########
     # Files #
     #########
