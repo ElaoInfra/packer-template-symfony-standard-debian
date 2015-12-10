@@ -37,7 +37,6 @@
       - debian_backports
 
     elao_apt_preferences:
-      - ruby@bearstech
       - ~@dotdeb:100
       - php@dotdeb
       - nginx@nginx
@@ -62,43 +61,6 @@
           - "user:{{ _user }}:rwx"
           - "default:user:{{ elao_php_user }}:rwx"
           - "default:user:{{ _user }}:rwx"
-
-    #######
-    # Gem #
-    #######
-
-    elao_gem_packages:
-      - name:    capifony
-        version: ~> 2.8
-
-    #############
-    # PhantomJS #
-    #############
-
-    elao_phantomjs_config_template: config/{{ _env }}.j2
-
-    ###############
-    # Mailcatcher #
-    ###############
-
-    elao_mailcatcher_config_template: config/{{ _env }}.j2
-
-    ##########
-    # Log.io #
-    ##########
-
-    elao_logio_config_harvester:
-      - nodeName: App
-      - logStreams:
-        - php:
-          - "{{ elao_php_log_dir }}/error.log"
-        - nginx:
-          - "{{ elao_nginx_log_dir }}/app.access.log"
-          - "{{ elao_nginx_log_dir }}/app.error.log"
-        - symfony:
-          - /var/log/symfony/dev.log
-          - /var/log/symfony/test.log
-          - /var/log/symfony/prod.log
       - path:  /var/lib/app/sessions
         state: directory
         acls:
@@ -121,8 +83,6 @@
         template: fpm_pools/www_{{ _env }}.conf.j2
 
     elao_php_extensions:
-      # Dev
-      - xdebug
       - opcache
       # Symfony
       - intl
@@ -130,8 +90,6 @@
 
     elao_php_configs_exclusive: true
     elao_php_configs:
-      - file: 50-xdebug.ini
-        template: configs/xdebug_{{ _env }}.ini.j2
       - file: 50-opcache.ini
         template: configs/opcache_{{ _env }}.ini.j2
       - file: 60-config.ini
@@ -151,45 +109,12 @@
 
     elao_nginx_configs_exclusive: true
 
-    #######
-    # Npm #
-    #######
-
-    elao_npm_packages:
-      - name:    gulp
-        version: 3
-
-    ##############
-    # Supervisor #
-    ##############
-
-    elao_supervisor_config_template: config/{{ _env }}.conf.j2
-
-    elao_supervisor_configs_exclusive: true
-    elao_supervisor_configs:
-      - file:     inet-http-server.conf
-        template: configs/inet_http_server_{{ _env }}.conf.j2
-
   roles:
     - role: elao.env
     - role: elao.apt
-#    - role: elao.curl
     - role: elao.files
     - role: elao.nodejs
     - role: elao.npm
-#    - role: elao.python
-#      when: "_type != 'docker'"
-#    - role: elao.pip
-#      when: "_type != 'docker'"
-#    - role: elao.ruby
-#    - role: elao.gem
-#      when: "_type != 'docker'"
-#    - role: elao.phantomjs
-#    - role: elao.mailcatcher
-#    - role: elao.logio
-#      when: "_type != 'docker'"
-#    - role: elao.php
-#    - role: elao.composer
+    - role: elao.php
+    - role: elao.composer
     - role: elao.nginx
-#    - role: elao.supervisor
-#      when: "_type != 'docker'"

@@ -2,31 +2,16 @@
   version: 1.0
 - src:     elao.apt
   version: 1.0
+  version: 1.0
 - src:     elao.files
+  version: 1.0
+- src:     elao.nodejs
+  version: 1.0
+- src:     elao.npm
   version: 1.0
 - src:     elao.php
   version: 1.0
 - src:     elao.composer
   version: 1.0
 - src:     elao.nginx
-  version: 1.0
-- src:     elao.nodejs
-  version: 1.0
-- src:     elao.npm
-  version: 1.0
-- src:     elao.python
-  version: 1.0
-- src:     elao.pip
-  version: 1.0
-- src:     elao.ruby
-  version: 1.0
-- src:     elao.gem
-  version: 1.0
-- src:     elao.phantomjs
-  version: 1.0
-- src:     elao.mailcatcher
-  version: 1.0
-- src:     elao.logio
-  version: 1.0
-- src:     elao.supervisor
   version: 1.0
