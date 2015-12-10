@@ -85,6 +85,7 @@
     elao_php_extensions:
       - opcache
       # Symfony
+      - json
       - intl
       - curl
 
@@ -112,6 +113,7 @@
   roles:
     - role: elao.env
     - role: elao.apt
+    - role: elao.mailhog
     - role: elao.files
     - role: elao.nodejs
     - role: elao.npm
