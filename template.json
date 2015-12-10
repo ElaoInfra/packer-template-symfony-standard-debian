@@ -2,7 +2,7 @@
     "variables": {
         "name"        : "symfony-standard-debian",
         "description" : "Symfony Standard - Debian",
-        "version"     : "2.0.0"
+        "version"     : "2.0.1"
     },
     "builders": [
         {
