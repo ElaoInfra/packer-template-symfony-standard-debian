@@ -2,6 +2,7 @@
   version: 1.0
 - src:     elao.apt
   version: 1.0
+- src:     elao.mailhog
   version: 1.0
 - src:     elao.files
   version: 1.0
