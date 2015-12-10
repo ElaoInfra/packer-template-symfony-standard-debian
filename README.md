@@ -13,7 +13,7 @@
    * Make 4.0
    * Acl
 
- * Node 5.1.1 (nodesource)
+ * Node 5.2.0 (nodesource)
  * Npm 3.3.12 (nodesource)
  * Php 7.0.0 (dotdeb)
    * php-common, php7.0-common, php7.0-cli, php7.0-fpm
